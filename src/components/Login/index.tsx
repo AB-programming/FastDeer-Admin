@@ -8,13 +8,14 @@ export default function Login() {
 
     const login = async (login: (token: string) => void) => {
         try {
-            const res = await axios.post('http://localhost:8000/admin/login', {
+            const res = await axios.post('http://localhost:8080/admin/login', {
                 username: 'user',
                 password: '123'
             });
 
             const loginRes = res.data as HttpResponse<string>
             if (loginRes.code === '200') {
+                console.log(loginRes)
                 login(loginRes.data)
                 navigate('/')
             }

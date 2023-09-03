@@ -1,10 +1,19 @@
-import React, {createContext, useState} from "react";
-import { useLoginStatus } from "./useLoginStatus";
-
+import React, {createContext, useEffect, useState} from "react";
+import {useLoginStatus} from "./useLoginStatus.ts";
 export const AuthContext = createContext<AuthOption>({} as AuthOption);
 
 export const AuthProvider = ({children}: { children: React.ReactNode }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(useLoginStatus());
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+    useEffect(() => {
+        const checkLogin = async () => {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const isLogin = await useLoginStatus()
+            setIsAuthenticated(isLogin)
+        }
+        checkLogin().then()
+    }, []);
+
 
     const login = (token: string) => {
         localStorage.setItem(import.meta.env.VITE_TOKEN, token)
