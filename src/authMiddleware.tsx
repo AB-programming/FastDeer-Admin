@@ -9,7 +9,7 @@ export const Auth = (element: React.ReactNode) => {
             value =>
                 (
                     <Suspense fallback={<h1>Loading...</h1>}>
-                        {value.isAuthenticated ? element : <Login/>}
+                        {value.isAuthenticated ? element : <Login />}
                     </Suspense>
                 )
         }

@@ -7,13 +7,15 @@ export default [
     {
         path: '/',
         element: Auth(<Dashboard />),
+        children: [
+            {
+                path: '/preference',
+                element: Auth(<Preferences />)
+            }
+        ]
     },
     {
         path: '/login',
         element: <Login />,
     },
-    {
-        path: 'preference',
-        element: Auth(<Preferences />),
-    }
 ]
