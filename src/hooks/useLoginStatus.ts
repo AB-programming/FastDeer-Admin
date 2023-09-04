@@ -3,14 +3,17 @@ import axios from "axios";
 export async function useLoginStatus(): Promise<boolean> {
     const token = localStorage.getItem(import.meta.env.VITE_TOKEN)
     if (!token) {
-        return true;
+        return false;
     }
     try {
-        const res = await axios.get('http://localhost:8080/admin/isLogin');
+        const res = await axios.get(import.meta.env.VITE_END_ADDRESS + '/admin/isLogin');
         const isLoginRes = res.data as HttpResponse<boolean>;
-        console.log(isLoginRes);
-        return true;
+        if (isLoginRes.code === '200') {
+            return isLoginRes.data
+        } else {
+            return false
+        }
     } catch (e) {
-        return true;
+        return false;
     }
 }

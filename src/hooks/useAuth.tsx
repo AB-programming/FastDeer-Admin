@@ -8,12 +8,13 @@ export const AuthProvider = ({children}: { children: React.ReactNode }) => {
     useEffect(() => {
         const checkLogin = async () => {
             // eslint-disable-next-line react-hooks/rules-of-hooks
-            const isLogin = await useLoginStatus()
-            setIsAuthenticated(isLogin)
+            const isLogin = await useLoginStatus();
+            if (isLogin) {
+                setIsAuthenticated(true)
+            }
         }
         checkLogin().then()
     }, []);
-
 
     const login = (token: string) => {
         localStorage.setItem(import.meta.env.VITE_TOKEN, token)

@@ -1,11 +1,17 @@
 import React from "react";
-import {Navigate} from "react-router-dom";
 import {AuthContext} from "./hooks/useAuth";
+import {Suspense} from "react";
+import Login from "./components/Login";
 
 export const Auth = (element: React.ReactNode) => {
     return <AuthContext.Consumer>
         {
-            value => value.isAuthenticated ? element : <Navigate to='/login'/>
+            value =>
+                (
+                    <Suspense fallback={<h1>Loading...</h1>}>
+                        {value.isAuthenticated ? element : <Login/>}
+                    </Suspense>
+                )
         }
     </AuthContext.Consumer>
 }
