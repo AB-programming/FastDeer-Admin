@@ -2,7 +2,7 @@ import React from 'react';
 import {
     AppstoreOutlined,
     BarChartOutlined,
-    CloudOutlined,
+    CloudOutlined, HomeOutlined,
     ShopOutlined,
     TeamOutlined,
     UploadOutlined,
@@ -11,11 +11,14 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
-import UserTable from "../UserTable";
+import { Outlet } from "react-router-dom";
+import {LABEL} from "../../util/constant";
+import { useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const items: MenuProps['items'] = [
+    HomeOutlined,
     UserOutlined,
     VideoCameraOutlined,
     UploadOutlined,
@@ -24,21 +27,51 @@ const items: MenuProps['items'] = [
     AppstoreOutlined,
     TeamOutlined,
     ShopOutlined,
-].map((icon, index) => ({
-    key: String(index + 1),
-    icon: React.createElement(icon),
-    label: `nav ${index + 1}`,
-}));
+].map((ico, index) => {
+    const key = String(index)
+    const icon = React.createElement(ico)
+    let label = '';
+    switch (index) {
+        case 0: {
+            label = LABEL.HOME;
+            break;
+        }
+        case 1: {
+            label = LABEL.USER_LIST;
+            break;
+        }
+        default: {
+            label = LABEL.OTHER;
+            break;
+        }
+    }
+    return ({
+        key,
+        icon,
+        label
+    })
+});
 
-function changeItem(key: string) {
-    console.log("change", key)
-}
 
 export default function Dashboard() {
+
+    const navigate = useNavigate();
+
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
+    function changeItem(key: string) {
+        switch (key) {
+            case '0': {
+                navigate('/');
+                break;
+            }
+            case '1': {
+                navigate('/userList')
+            }
+        }
+    }
     return (
         <Layout hasSider>
             <Sider
@@ -52,14 +85,14 @@ export default function Dashboard() {
                 }}
             >
                 <div className="demo-logo-vertical" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} onClick={event => changeItem(event.key)}/>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']} items={items} onClick={event => changeItem(event.key)}/>
             </Sider>
             <Layout className="site-layout" style={{ marginLeft: 200 }}>
                 <Header style={{ padding: 0, background: colorBgContainer }} >
 
                 </Header>
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                    <UserTable />
+                    <Outlet />
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>
                     <p>Released under the MIT License.</p>

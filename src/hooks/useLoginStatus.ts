@@ -6,9 +6,12 @@ export async function useLoginStatus(): Promise<boolean> {
         return false;
     }
     try {
-        const res = await axios.get(import.meta.env.VITE_END_ADDRESS + '/admin/isLogin?token=' + token);
+        const res = await axios.get(import.meta.env.VITE_END_ADDRESS + '/admin/isLogin?token=' + token, {
+            headers: {
+                "Authorization": token
+            }
+        });
         const isLoginRes = res.data as HttpResponse<boolean>;
-        console.log(isLoginRes)
         if (isLoginRes.code === '200') {
             return isLoginRes.data
         } else {

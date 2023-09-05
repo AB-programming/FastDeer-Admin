@@ -1,7 +1,7 @@
 import Dashboard from "../components/Dashboard";
-import Preferences from "../components/Preferences";
 import Login from "../components/Login";
 import {Auth} from "../authMiddleware.tsx";
+import UserList from "../pages/UserList";
 
 export default [
     {
@@ -9,8 +9,8 @@ export default [
         element: Auth(<Dashboard />),
         children: [
             {
-                path: '/preference',
-                element: Auth(<Preferences />)
+                path: '/userList',
+                element: Auth(<UserList />)
             }
         ]
     },

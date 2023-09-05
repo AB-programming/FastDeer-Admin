@@ -1,9 +1,10 @@
 import {AuthContext} from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import { Button, Checkbox, Form, Input } from 'antd';
+import {Button, Checkbox, Form, Input, notification} from 'antd';
 import {useState} from "react";
 import "./index.css"
+import {FrownOutlined, SmileOutlined} from "@ant-design/icons";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -26,6 +27,15 @@ export default function Login() {
         login?: (token: string) => void
     };
 
+    const [api, contextHolder] = notification.useNotification()
+    const openNotification = (loginFlag: boolean, loginRes: HttpResponse<string>) => {
+        api.open({
+            message: loginRes.msg,
+            description: loginFlag ? '' : loginRes.data,
+            icon: loginFlag ? <SmileOutlined style={{color: '#108ee9'}}/> : <FrownOutlined style={{color: '#e32417'}}/>
+        })
+    }
+
     const login = async (login: (token: string) => void) => {
         if (username === '' || password === '') {
             return;
@@ -37,13 +47,19 @@ export default function Login() {
             });
 
             const loginRes = res.data as HttpResponse<string>
-            console.log(loginRes)
             if (loginRes.code === '200') {
+                openNotification(true, loginRes)
                 login(loginRes.data)
-                navigate('/')
+                setTimeout(() => {
+                    navigate('/')
+                }, 1000)
+            } else {
+                openNotification(false, loginRes)
             }
         } catch (e) {
-            console.log(e)
+            api.open({
+                message: '网络错误，请稍后再试'
+            })
         }
     }
 
@@ -51,46 +67,49 @@ export default function Login() {
         <AuthContext.Consumer>
             {
                 value => {
-                    return <Form
-                        className={'form'}
-                        name="basic"
-                        labelCol={{span: 8}}
-                        wrapperCol={{span: 16}}
-                        style={{maxWidth: 600}}
-                        initialValues={{remember: true}}
-                        onFieldsChange={onFiledChange}
-                        autoComplete="off"
-                    >
-                        <Form.Item<FieldType>
-                            label="用户名"
-                            name="username"
-                            rules={[{required: true, message: '请输入用户名！'}]}
+                    return <>
+                        {contextHolder}
+                        <Form
+                            className={'form'}
+                            name="basic"
+                            labelCol={{span: 8}}
+                            wrapperCol={{span: 16}}
+                            style={{maxWidth: 600}}
+                            initialValues={{remember: true}}
+                            onFieldsChange={onFiledChange}
+                            autoComplete="off"
                         >
-                            <Input/>
-                        </Form.Item>
+                            <Form.Item<FieldType>
+                                label="用户名"
+                                name="username"
+                                rules={[{required: true, message: '请输入用户名！'}]}
+                            >
+                                <Input/>
+                            </Form.Item>
 
-                        <Form.Item<FieldType>
-                            label="密码"
-                            name="password"
-                            rules={[{required: true, message: '请输入密码！'}]}
-                        >
-                            <Input.Password/>
-                        </Form.Item>
+                            <Form.Item<FieldType>
+                                label="密码"
+                                name="password"
+                                rules={[{required: true, message: '请输入密码！'}]}
+                            >
+                                <Input.Password/>
+                            </Form.Item>
 
-                        <Form.Item<FieldType>
-                            name="remember"
-                            valuePropName="checked"
-                            wrapperCol={{offset: 8, span: 16}}
-                        >
-                            <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
+                            <Form.Item<FieldType>
+                                name="remember"
+                                valuePropName="checked"
+                                wrapperCol={{offset: 8, span: 16}}
+                            >
+                                <Checkbox>Remember me</Checkbox>
+                            </Form.Item>
 
-                        <Form.Item wrapperCol={{offset: 8, span: 16}}>
-                            <Button type="primary" htmlType="submit" onClick={() => login(value.login)}>
-                                登录
-                            </Button>
-                        </Form.Item>
-                    </Form>
+                            <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                                <Button type="primary" htmlType="submit" onClick={() => login(value.login)}>
+                                    登录
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </>
                 }
             }
         </AuthContext.Consumer>
