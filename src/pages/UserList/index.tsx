@@ -1,12 +1,12 @@
 import React from 'react';
-import {Table, Avatar, Button} from 'antd';
+import {Table, Avatar, Space} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 
 interface DataType {
     key: string;
-    name: string;
+    nickName: string;
     gender: string;
-    avatar: string;
+    avatarUrl: string;
     place: string;
     birth: string;
     school: string;
@@ -17,15 +17,14 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
     {
-        title: 'OpenId',
+        title: '用户Id',
         key: 'key',
         dataIndex: 'key',
     },
     {
         title: '昵称',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <p>{text}</p>,
+        dataIndex: 'nickName',
+        key: 'nickName',
     },
     {
         title: '性别',
@@ -34,8 +33,8 @@ const columns: ColumnsType<DataType> = [
     },
     {
         title: '头像',
-        dataIndex: 'avatar',
-        key: 'avatar',
+        dataIndex: 'avatarUrl',
+        key: 'avatarUrl',
         render: (url) => <Avatar size={"large"} src={url}/>
     },
     {
@@ -64,12 +63,12 @@ const columns: ColumnsType<DataType> = [
         key: 'graduationDate',
     },
     {
-        title: 'Action',
+        title: '操作',
         key: 'action',
         render: (_, record) => (
-            <Button type="primary" danger>
-                注销
-            </Button>
+            <Space size="middle">
+                <a>注销</a>
+            </Space>
         ),
     },
 ];
@@ -77,9 +76,9 @@ const columns: ColumnsType<DataType> = [
 const data: DataType[] = [
     {
         key: '1',
-        name: 'John Brown',
+        nickName: 'John Brown',
         gender: '32',
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        avatarUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
         place: 'New York No. 1 Lake Park',
         birth: '1992-10-02',
         school: '江西工业大学',
@@ -89,28 +88,30 @@ const data: DataType[] = [
     },
     {
         key: '2',
-        name: 'Jim Green',
+        nickName: 'Jim Green',
         gender: '42',
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        avatarUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
         place: 'London No. 1 Lake Park',
         birth: '1992-10-02',
         school: '江西工业大学',
         major: '计算本秘修',
         qualification: '本秘修',
-        graduationDate: '2022-01-01',},
+        graduationDate: '2022-01-01',
+    },
     {
         key: '3',
-        name: 'Joe Black',
+        nickName: 'Joe Black',
         gender: '32',
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        avatarUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
         place: 'Sidney No. 1 Lake Park',
         birth: '1992-10-02',
         school: '江西工业大学',
         major: '计算本秘修',
         qualification: '本秘修',
-        graduationDate: '2022-01-01',},
+        graduationDate: '2022-01-01',
+    },
 ];
-const UserTable: React.FC = () => {
+const UserList: React.FC = () => {
     return (
         <div>
             <Table columns={columns}
@@ -121,4 +122,4 @@ const UserTable: React.FC = () => {
     );
 };
 
-export default UserTable;
+export default UserList;
