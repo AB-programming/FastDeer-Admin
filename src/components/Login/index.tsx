@@ -1,18 +1,17 @@
 import {AuthContext} from "../../hooks/useAuth";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Button, Checkbox, Form, Input, notification} from 'antd';
 import {useState} from "react";
 import "./index.css"
 import {FrownOutlined, SmileOutlined} from "@ant-design/icons";
+import {FieldData} from "rc-field-form/lib/interface";
 
 export default function Login() {
-    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    const onFiledChange = (changeField) => {
+    
+    const onFiledChange = (changeField: FieldData[]) => {
         if (changeField[0].name[0] === 'username') {
             setUsername(changeField[0].value)
         } else {
@@ -42,16 +41,15 @@ export default function Login() {
         }
         try {
             const res = await axios.post(import.meta.env.VITE_END_ADDRESS + '/admin/login', {
-                username: username,
-                password: password
+                username,
+                password
             });
 
             const loginRes = res.data as HttpResponse<string>
             if (loginRes.code === '200') {
                 openNotification(true, loginRes)
-                login(loginRes.data)
                 setTimeout(() => {
-                    navigate('/')
+                    login(loginRes.data)
                 }, 1000)
             } else {
                 openNotification(false, loginRes)
