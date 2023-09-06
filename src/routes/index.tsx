@@ -3,6 +3,7 @@ import Login from "../components/Login";
 import {Auth} from "../authMiddleware.tsx";
 import UserList from "../pages/UserList";
 import Home from "../pages/Home";
+import PostList from "../pages/PostList";
 
 export default [
     {
@@ -16,6 +17,10 @@ export default [
             {
                 path: '/userList',
                 element: Auth(<UserList />)
+            },
+            {
+                path: '/postList',
+                element: Auth(<PostList />)
             }
         ]
     },

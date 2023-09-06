@@ -9,13 +9,13 @@ import {
     UserOutlined,
     VideoCameraOutlined,
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Layout, Menu, theme } from 'antd';
-import { Outlet } from "react-router-dom";
+import type {MenuProps} from 'antd';
+import {Layout, Menu, theme} from 'antd';
+import {Outlet} from "react-router-dom";
 import {LABEL} from "../../util/constant";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-const { Header, Content, Footer, Sider } = Layout;
+const {Header, Content, Footer, Sider} = Layout;
 
 const items: MenuProps['items'] = [
     HomeOutlined,
@@ -40,6 +40,10 @@ const items: MenuProps['items'] = [
             label = LABEL.USER_LIST;
             break;
         }
+        case 2: {
+            label = LABEL.POST_LIST;
+            break;
+        }
         default: {
             label = LABEL.OTHER;
             break;
@@ -58,7 +62,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
 
     const {
-        token: { colorBgContainer },
+        token: {colorBgContainer},
     } = theme.useToken();
 
     function changeItem(key: string) {
@@ -68,10 +72,16 @@ export default function Dashboard() {
                 break;
             }
             case '1': {
-                navigate('/userList')
+                navigate('/userList');
+                break;
+            }
+            case '2': {
+                navigate('/postList');
+                break;
             }
         }
     }
+
     return (
         <Layout hasSider>
             <Sider
@@ -84,17 +94,18 @@ export default function Dashboard() {
                     bottom: 0,
                 }}
             >
-                <div className="demo-logo-vertical" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']} items={items} onClick={event => changeItem(event.key)}/>
+                <div className="demo-logo-vertical"/>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']} items={items}
+                      onClick={event => changeItem(event.key)}/>
             </Sider>
-            <Layout className="site-layout" style={{ marginLeft: 200 }}>
-                <Header style={{ padding: 0, background: colorBgContainer }} >
+            <Layout className="site-layout" style={{marginLeft: 200}}>
+                <Header style={{padding: 0, background: colorBgContainer}}>
 
                 </Header>
-                <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                    <Outlet />
+                <Content style={{margin: '24px 16px 0', overflow: 'initial'}}>
+                    <Outlet/>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>
+                <Footer style={{textAlign: 'center'}}>
                     <p>Released under the MIT License.</p>
                     <p>Copyright © 2023-2025 FastDeer Team</p>
                 </Footer>
