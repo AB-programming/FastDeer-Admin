@@ -6,7 +6,6 @@ import {AuthProvider} from "./hooks/useAuth.tsx";
 
 const App: React.FC = () => {
     const element = useRoutes(routes)
-
     return (
         <AuthProvider>
             {element}
