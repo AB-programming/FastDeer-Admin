@@ -1,32 +1,22 @@
 import React from 'react';
 import {
-    AppstoreOutlined,
-    BarChartOutlined,
-    CloudOutlined, HomeOutlined,
-    ShopOutlined,
-    TeamOutlined,
-    UploadOutlined,
+    HomeOutlined,
     UserOutlined,
-    VideoCameraOutlined,
+    HddOutlined,
 } from '@ant-design/icons';
 import type {MenuProps} from 'antd';
 import {Layout, Menu, theme} from 'antd';
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate, useRoutes} from "react-router-dom";
 import {LABEL} from "../../util/constant";
-import {useNavigate} from "react-router-dom";
+import routes from "../../routes";
+import Title from "antd/es/typography/Title";
 
 const {Header, Content, Footer, Sider} = Layout;
 
 const items: MenuProps['items'] = [
     HomeOutlined,
     UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-    BarChartOutlined,
-    CloudOutlined,
-    AppstoreOutlined,
-    TeamOutlined,
-    ShopOutlined,
+    HddOutlined
 ].map((ico, index) => {
     const key = String(index)
     const icon = React.createElement(ico)
@@ -60,6 +50,8 @@ const items: MenuProps['items'] = [
 export default function Dashboard() {
 
     const navigate = useNavigate();
+    const route = useRoutes(routes);
+    const routeName = route?.props.routeContext.outlet.props.match.route.name;
 
     const {
         token: {colorBgContainer},
@@ -100,7 +92,7 @@ export default function Dashboard() {
             </Sider>
             <Layout className="site-layout" style={{marginLeft: 200}}>
                 <Header style={{padding: 0, background: colorBgContainer}}>
-
+                    <Title level={2}>{routeName}</Title>
                 </Header>
                 <Content style={{margin: '24px 16px 0', overflow: 'initial'}}>
                     <Outlet/>

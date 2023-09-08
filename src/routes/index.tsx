@@ -12,14 +12,17 @@ export default [
         children: [
             {
                 path: '/',
+                name: '首页',
                 element: Auth(<Home />)
             },
             {
                 path: '/userList',
+                name: '用户列表',
                 element: Auth(<UserList />)
             },
             {
                 path: '/postList',
+                name: '帖子列表',
                 element: Auth(<PostList />)
             }
         ]
