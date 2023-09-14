@@ -34,6 +34,10 @@ const items: MenuProps['items'] = [
             label = LABEL.POST_LIST;
             break;
         }
+        case 3: {
+            label = LABEL.Feedback;
+            break;
+        }
         default: {
             label = LABEL.OTHER;
             break;
@@ -69,6 +73,10 @@ export default function Dashboard() {
             }
             case '2': {
                 navigate('/postList');
+                break;
+            }
+            case '3': {
+                navigate('/feedback');
                 break;
             }
         }

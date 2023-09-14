@@ -4,6 +4,7 @@ import {Auth} from "../authMiddleware.tsx";
 import UserList from "../pages/UserList";
 import Home from "../pages/Home";
 import PostList from "../pages/PostList";
+import Feedback from "../pages/Feedback";
 
 export default [
     {
@@ -24,6 +25,10 @@ export default [
                 path: '/postList',
                 name: '帖子列表',
                 element: Auth(<PostList />)
+            },
+            {
+                path: '/feedback',
+                element: Auth(<Feedback />)
             }
         ]
     },
