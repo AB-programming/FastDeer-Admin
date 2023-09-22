@@ -3,6 +3,7 @@ import {
     HomeOutlined,
     UserOutlined,
     HddOutlined,
+    HourglassOutlined
 } from '@ant-design/icons';
 import type {MenuProps} from 'antd';
 import {Layout, Menu, theme} from 'antd';
@@ -16,7 +17,8 @@ const {Header, Content, Footer, Sider} = Layout;
 const items: MenuProps['items'] = [
     HomeOutlined,
     UserOutlined,
-    HddOutlined
+    HddOutlined,
+    HourglassOutlined,
 ].map((ico, index) => {
     const key = String(index)
     const icon = React.createElement(ico)

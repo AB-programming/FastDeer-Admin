@@ -28,6 +28,7 @@ export default [
             },
             {
                 path: '/feedback',
+                name: '反馈',
                 element: Auth(<Feedback />)
             }
         ]
